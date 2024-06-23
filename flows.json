@@ -1,0 +1,139 @@
+[
+    {
+        "id": "f266b6bc9a9a03f5",
+        "type": "subflow",
+        "name": "ChartSorter",
+        "info": "## ChartSort\n\nThis node takes the output of chart and reorders the series elements according to a given configuration. This allows for a static assignment of line chart color to input topics to the chart. The output of hthis node shall be fed back into the chart to force the sequence of the series as configured, no matter which topic came first",
+        "category": "Dashboard",
+        "in": [
+            {
+                "x": 40,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "246b2689b7b4339b"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 570,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "5b58bdc70989d6c8",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 530,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "5b58bdc70989d6c8",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "topics",
+                "type": "str",
+                "value": "D1,D2,D3"
+            }
+        ],
+        "meta": {
+            "module": "CharSorter",
+            "version": "1.0.0",
+            "desc": "Dashboard chart data sorter",
+            "keywords": "Dashboard, ui_chart"
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "chart object input"
+        ],
+        "outputLabels": [
+            "chart object output",
+            "status"
+        ],
+        "icon": "font-awesome/fa-filter"
+    },
+    {
+        "id": "5b58bdc70989d6c8",
+        "type": "function",
+        "z": "f266b6bc9a9a03f5",
+        "name": "ChartSort",
+        "func": "\nvar configStr = msg.configtopics||\"D1,D2,D3\";\n\n// this shall be testet for correct format\nvar S = configStr.split(\",\")\n\nvar series;\nvar data;\n\n/*\n    return a chart object with default values\n*/\nfunction initChart() {\n    var sortedData = [];\n    var i = 0;\n    S.forEach(v => {\n        sortedData[i] = [{\"x\":4573,\"y\":null}];\n        i++;\n    });\n    return [{series:S, data:sortedData}];\n}\n\n/*\n    checks if the chart object hold the configured topics in the right order\n*/\nfunction checkChart() {\n    if ( S.length > series.length) {\n        return false;\n    }\n    var correct = true;\n    for (var i=0; i < S.length; i++) {\n        if ( series[i].trim() != S[i].trim()) {\n            correct = false; \n        }\n    }\n    return correct;\n}\n\n/*\n    split a given chart object in the configured and a remaining part\n*/\nfunction splitChart() {\n    var co = initChart();\n    var rSeries = [];\n    var rData   = [];\n    \n    var completed = true;\n    var i,j;\n    //\n    // pick the configured\n    //\n    for (i=0; i < S.length; i++) {\n        for (j=0; j < series.length; j++) {    \n            if ( series[j].trim() == S[i].trim()) {\n                co[0].data[i] = data[j]; \n            }\n        }\n    }\n    \n    //\n    // pick all non configured\n    //\n    var f = 0\n    var found;\n    for (j=0; j < series.length; j++) {\n        found = false;\n        for (i=0; i < S.length; i++) {\n            if ( series[j].trim() == S[i].trim()) {\n                found = true; \n            }\n        }\n        if ( !found ) {\n            rSeries[f] = series[j].trim();\n            rData[f]   = data[j];\n            f++\n        }\n    }\n    \n    var ro = [{series:rSeries, data:rData}];\n    return { configObj:co, reminderObj:ro }\n}\n\n/*\n    connects two chart objects into one\n*/\nfunction connectChartObjs(ob1,ob2) {\n    var i;\n    var k = ob1[0].series.length\n    for (i=0; i < ob2[0].series.length; i++) { \n        ob1[0].series[k+i] = ob2[0].series[i];\n        ob1[0].data[k+i]   = ob2[0].data[i];\n    }    \n    return ob1;\n}\n\n\n// if the chart object is empty, return an initialized chart object\nif (msg.payload.length == 0 ) {\n    return [\n        {payload:initChart()},\n        {payload:{status:\"on empty\"}}    \n    ];\n}\n\n// chart object?\nif (msg.payload.length == 1 ) {\n\n    // are there a series and data?    \n    if (typeof msg.payload[0].series !== 'undefined' &&\n        typeof msg.payload[0].data !== 'undefined' ) {\n        series = msg.payload[0].series;\n        data   = msg.payload[0].data;\n    } else {\n        // return an init chart object\n        node.status({fill:\"red\",shape:\"dot\",text:\"no chart\"});\n        return [\n            {payload:initChart()},\n            {payload:{status:\"no chart object\"}}    \n        ];\n    }\n    \n    // test if the chart is correct\n    if ( checkChart() ) {\n        // do nothing, shall be most cases\n        node.status({fill:\"green\",shape:\"dot\",text:\"chart correct\"});\n        return [\n                null,\n                {payload:{status:\"chart correct\"}}    \n        ];        \n    } else {\n        // split can connect the chart object\n        var O = splitChart()\n        node.status({fill:\"green\",shape:\"ringt\",text:\"split and connect\"});\n        return [\n                {payload:connectChartObjs(O.configObj,O.reminderObj)},\n                {payload:{status:\"split and connect\"}}    \n        ];\n    }\n\n}\n\n// should not come here, show this in tje status\nnode.status({fill:\"red\",shape:\"dot\",text:\"unclear\"});\nreturn [\n    null,\n    {payload:{status:\"unclear situation\"}}\n];\n",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "ChartSorterFunction",
+                "module": "ChartSorterFunction"
+            }
+        ],
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [],
+            []
+        ],
+        "info": "## ChartSort\r\n\r\nThis node takes the output of chart and reorders the series elements according to a given configuration. This allows for a static assignment of line chart color to input topics to the chart. The output of the node is fed back into the chart to force the sequence of the series as configured, no matter which topic came first. In case of a correct ordered sequence nothing needs to happen and fed back. When a new reordered object is fed back, a flag in the message indicats this and the resulting object from the chart won't be processed to avoid the risk of endless recursion. \r\n\r\nThe ChartSort node shall handle the following situations, the chart object is:\r\n* emty\r\n* has some elements of configuration\r\n* has all elements but in wrong order\r\n* has more element than the configuration\r\n\r\nThere should be only one to two cycles  and then things should be fine. \r\n\r\n### Processing\r\n\r\n1. Check if the configuration topics map perfect to the in comming series.\r\n2.  If not, reorder the data according to the input and configuration series and\r\n3.  feed back the object. \r\n\r\n### Empty\r\n\r\nThe ChartSort node feeds back a dummy node with the configured series and dummy data with y equals to Null or false. \r\n\r\n### Some elements \r\n\r\nThe ChartSort node feeds back the configured series and the ordered existing data accordingly. \r\n\r\n## All elements and more \r\nThe ChartSort node set the correct series order and reorder the data as well. The result is fed back. Additional series are appended or ignored. This might be subject of the configuration. "
+    },
+    {
+        "id": "246b2689b7b4339b",
+        "type": "change",
+        "z": "f266b6bc9a9a03f5",
+        "name": "configtopics",
+        "rules": [
+            {
+                "t": "set",
+                "p": "configtopics",
+                "pt": "msg",
+                "to": "topics",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "5b58bdc70989d6c8"
+            ]
+        ]
+    },
+    {
+        "id": "810b401344fadab2",
+        "type": "subflow:f266b6bc9a9a03f5",
+        "z": "155c3732cd70f8a3",
+        "name": "",
+        "env": [
+            {
+                "name": "topics",
+                "value": "T1,T2,T3",
+                "type": "str"
+            }
+        ],
+        "x": 810,
+        "y": 220,
+        "wires": [
+            [
+                "aae2d4cd0eafbee0"
+            ],
+            [
+                "cd136a6e6c7e074f"
+            ]
+        ]
+    }
+]
