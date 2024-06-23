@@ -4,6 +4,9 @@ This subflow takes the output of chart and reorders the series elements accordin
 The output of the subflow shall be fed back into the chart to force the sequence of the series as configured, no matter which topic came first. 
 In case of a correct ordered sequence nothing needs to happen and fed back.
 ![demoflow](/doc/demoflow.png)
+
+As a result of this subflow, the configured topics of the subflow, force the chart data to be in that order and so the color setting in the chart implicitly sticks to the topic sequences. 
+
 ## Related work 
 
 * [Noderes - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
