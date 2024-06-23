@@ -8,6 +8,8 @@ The output of the subflow shall be fed back into the chart to force the sequence
 In case of a correct ordered series nothing needs to happen and fed back. As a result of this subflow, 
 the configured topics of the subflow, force the chart data to be in that order and so the color setting in the chart implicitly sticks to the topic sequences. 
 
+The second status outlet dumps a message about the Chartsroters behaviour. 
+
 # Usage
 
 Double-click on the subflow Chartsorter and enter the sequence of the desired sereis in the `topics environment` variable. The topics are separated by a comma, e.g., `last hour,last 3 hours,last 6 hours`.
