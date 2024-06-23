@@ -3,7 +3,7 @@
 This subflow takes the output of chart and reorders the series elements according to a given configuration. This allows for a static assignment of line chart color to input topics to the chart. 
 The output of the subflow shall be fed back into the chart to force the sequence of the series as configured, no matter which topic came first. 
 In case of a correct ordered sequence nothing needs to happen and fed back.
-
+![demoflow](/doc/demoflow.png)
 ## Related work 
 
 * [Noderes - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
