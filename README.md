@@ -9,3 +9,9 @@ In case of a correct ordered sequence nothing needs to happen and fed back.
 * [Noderes - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
 * [Dashboard chart - change line colour dependent on value](https://flows.nodered.org/flow/a78ac10821112eb07fb8be8957a9f7cb)
 
+## Packaging subflow
+
+* https://nodered.org/docs/creating-nodes/subflow-modules
+* https://kazuhitoyokoi.medium.com/creating-custom-node-from-subflow-in-node-red-ce52cc42bbba
+
+
