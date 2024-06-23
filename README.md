@@ -7,9 +7,13 @@ In case of a correct ordered sequence nothing needs to happen and fed back.
 
 As a result of this subflow, the configured topics of the subflow, force the chart data to be in that order and so the color setting in the chart implicitly sticks to the topic sequences. 
 
-## Usages
+# Usage
 
-copy the content of the `flow.json` file into the cliplborad an import it into your nore-red flow.
+Double-click on the subflow and enter the sequence of the topics in the `topics environment` variable. The topics are separated by a comma, e.g., `last hour,last 3 hours,last 6 hours`.
+
+## Installation
+
+Copy the content of the `flow.json` file into the cliplborad an import it into your nore-red flow.
 
 ## Related work 
 
