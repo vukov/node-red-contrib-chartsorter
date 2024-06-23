@@ -20,7 +20,7 @@ Copy the content of the `flow.json` file into the cliplborad and import it into 
 
 ## Related work 
 
-* [Noderes - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
+* [Node-red-discourse - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
 * [Dashboard chart - change line colour dependent on value](https://flows.nodered.org/flow/a78ac10821112eb07fb8be8957a9f7cb)
 
 
