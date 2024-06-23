@@ -7,6 +7,10 @@ In case of a correct ordered sequence nothing needs to happen and fed back.
 
 As a result of this subflow, the configured topics of the subflow, force the chart data to be in that order and so the color setting in the chart implicitly sticks to the topic sequences. 
 
+## Usages
+
+copy the content of the `flow.json` file into the cliplborad an import it into your nore-red flow.
+
 ## Related work 
 
 * [Noderes - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
