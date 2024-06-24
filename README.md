@@ -1,6 +1,6 @@
 # node-red-contrib-chartsorter
 
-This subflow takes the output of line chart and reorders the series elements according to a given configuration of topics. This allows to overcome the shortcomming, that that first data to the chart gets visualized in the first color of the chart. This prohibits a  a static assignment of line chart color to input topics to the chart (as discussed here[^1]). 
+This subflow takes the output of line chart and reorders the series elements according to a given configuration of topics. This allows to overcome the shortcomming, that that first data to the chart gets visualized in the first color of the chart. This prohibits a  a static assignment of line chart color to input topics to the chart (as discussed here[^1] and [^2] ). 
 The output of the subflow shall be fed back into the chart to force the sequence of the series as configured, no matter which topic came first (see the figure below). 
 
 ![demoflow](/doc/demoflow.png)
