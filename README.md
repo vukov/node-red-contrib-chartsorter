@@ -1,6 +1,6 @@
 # node-red-contrib-chartsorter
 
-This subflow takes the output of line chart and reorders the series elements according to a given configuration of topics. This allows to overcome the shortcomming, that that first data to the chart gets visualized in the first color of the chart. This prohibits a  a static assignment of line chart color to input topics to the chart. 
+This subflow takes the output of line chart and reorders the series elements according to a given configuration of topics. This allows to overcome the shortcomming, that that first data to the chart gets visualized in the first color of the chart. This prohibits a  a static assignment of line chart color to input topics to the chart (as discussed here[^1]). 
 The output of the subflow shall be fed back into the chart to force the sequence of the series as configured, no matter which topic came first (see the figure below). 
 
 ![demoflow](/doc/demoflow.png)
@@ -20,8 +20,8 @@ Copy the content of the `flow.json` file into the cliplborad and import it into 
 
 ## Related work 
 
-* [Node-red-discourse - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
-* [Dashboard chart - change line colour dependent on value](https://flows.nodered.org/flow/a78ac10821112eb07fb8be8957a9f7cb)
+[^1]: [Node-red-discourse - Chart line color](https://discourse.nodered.org/t/chart-line-color/13427)
+[^2]: [Dashboard chart - change line colour dependent on value](https://flows.nodered.org/flow/a78ac10821112eb07fb8be8957a9f7cb)
 
 
 
