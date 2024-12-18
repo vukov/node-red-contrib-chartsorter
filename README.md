@@ -12,7 +12,7 @@ The second status outlet dumps a message about the Chartsroters behaviour.
 
 # Usage
 
-Double-click on the subflow Chartsorter and enter the sequence of the desired series in the `topics` environment variable. The topics are separated by a comma, e.g., `last hour,last 3 hours,last 6 hours`. Careful with the commas there shuould be no space.
+Double-click on the subflow Chartsorter and enter the sequence of the desired series in the `topics` environment variable. The topics are separated by a comma, e.g., `last hour,last 3 hours,last 6 hours`. Careful with the commas there should be no space around them.
 
 ## Installation
 
